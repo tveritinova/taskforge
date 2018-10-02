@@ -13,3 +13,4 @@ discussion to occur before a feature is built.
 
    initial_design
    cli_design
+   trello_list_design
