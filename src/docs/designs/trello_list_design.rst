@@ -9,7 +9,7 @@ Design
 Configurration
 ++++++++++++++
 
-You must put your ``trello-token`` and ``board-id`` to the configation file in ``[list.config]`` section.
+You must put your ``trello-token`` and ``board-id`` to the configation file in ``[list.config]`` section. If board isn't specified, the board "Taskforge" will be created.
 
 
 
@@ -28,7 +28,7 @@ Implementation of base class List functionality
 
 ``complete``:
 
-Completed tasks are holding in "done" list in booard. You can configure list name with ``done-list-name`` in ``[list.config]`` section of the configuration file or you can specify flag ``archive-done-tasks`` to archive completed tasks instead of moving in to "done" list.
+Completed tasks are holding in "done" list in booard. You can configure list name with ``done-list-name`` in ``[list.config]`` section of the configuration file or you can specify flag ``archive-done-tasks = 1`` to archive completed tasks instead of moving in to "done" list. ``archive-done-tasks`` has more priority then ``done-list-name``.
 
 ``update`` -- update task by id
 
