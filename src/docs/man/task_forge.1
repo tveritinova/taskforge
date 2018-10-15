@@ -1,0 +1,2908 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "TASK_FORGE" "1" "Oct 16, 2018" "0.1.0" "Taskforge"
+.SH NAME
+task_forge \- Taskforge Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.sp
+A task management library and tool focused on integration with existing
+services.
+.sp
+\fBContents:\fP
+.SH TUTORIALS
+.sp
+Step by step guides for using Taskforge
+.SS Getting Started
+.sp
+Welcome to the Taskforge getting started guide. This is everything you need to
+know to get Taskforge up and running.
+.INDENT 0.0
+.IP \(bu 2
+\fI\%Prerequisites\fP
+.IP \(bu 2
+\fI\%Installing\fP
+.IP \(bu 2
+\fI\%Using Taskforge\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%Your first task\fP
+.IP \(bu 2
+\fI\%What\(aqs next?\fP
+.IP \(bu 2
+\fI\%Completing tasks\fP
+.IP \(bu 2
+\fI\%Viewing incomplete tasks\fP
+.IP \(bu 2
+\fI\%Re\-ordering tasks\fP
+.UNINDENT
+.IP \(bu 2
+\fI\%Further Reading\fP
+.UNINDENT
+.SS Prerequisites
+.sp
+Before you install Taskforge you\(aqll need a few things installed. Writing an
+installation guide for all the prerequisites is outside the scope of this
+document so we will simply link to the canonical documentation below:
+.INDENT 0.0
+.IP \(bu 2
+\fI\%Python 3\fP
+.IP \(bu 2
+\fI\%PIP (Included with Python versions 3.4 and above)\fP
+.UNINDENT
+.sp
+Certain list implementations will require additional packages not installed in
+this guide to work. See the \&../lists/index documentation for your preferred list to
+know more. In this guide we will use the SQLite list because it will work on
+most platforms with no additional setup.
+.SS Installing
+.sp
+First, let\(aqs install Taskforge. At the time of this writing the only method for
+installing Taskforge is from pip:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ pip3 install taskforge\-cli
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+The pip command can vary slightly based on your platform, \fBpip3\fP is
+used here because it will work on most platforms.
+.sp
+For example Windows users will need to do:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ python.exe \-m pip install taskforge\-cli
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Using Taskforge
+.SS Your first task
+.sp
+Now that Taskforge is installed we can start using it. Out of the box taskforge
+will use a SQLite database to store and retrieve tasks. Lets add a task now:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task add complete the Taskforge tutorial
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+To see what tasks are in our list we can use \fBtask list\fP\&. Let\(aqs run it now:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task list
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS What\(aqs next?
+.sp
+If we want to see what our current task is you can use \fBtask next\fP or
+\fBtask current\fP:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task next
+eabdeee413ef442fa68c994119d817d2: complete the taskforge tutorial
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Taskforge defines the \(aqcurrent\(aq task as the highest priority task. If all tasks
+are of equal priority then the \(aqcurrent\(aq task is the one with the oldest created
+date. To demonstrate let\(aqs add a few more tasks:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task add another default priority task
+$ task add \-\-priority 2 a high priority task
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This introduces a new flag \fB\-\-priority\fP\&. You can set many fields on a task via
+flags to the add command. See the \&../cli/task_add documentation for more
+information.
+.sp
+Now our \fBtask list\fP should look like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task list
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None           | 1.0      | another default priority task   | default |
+| 265b67ff298643dbb05950f3394a5ab0 | 2018\-09\-23 18:46:30.082289 | None           | 2.0      | a high priority task            | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If we run \fBtask next\fP now we\(aqll see that the \(aqa high priority task\(aq is the
+current task:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task next
+265b67ff298643dbb05950f3394a5ab0: a high priority task
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This is because priority, in the Taskforge world, is the #1 indicator of what
+you should be working on. Then you should be working on whatever has been
+waiting the longest.
+.SS Completing tasks
+.sp
+You can complete tasks with \fBtask done\fP or \fBtask complete\fP\&. Let\(aqs complete
+our high priority task:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task next
+265b67ff298643dbb05950f3394a5ab0: a high priority task
+$ task done 265b67ff298643dbb05950f3394a5ab0
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Every task has a unique ID. Most commands will show you this ID for easy with
+other commands like done which take a Task ID as an argument.
+.SS Viewing incomplete tasks
+.sp
+Now that we\(aqve completed this task we\(aqll see that the current task has changed:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task next
+eabdeee413ef442fa68c994119d817d2: complete the taskforge tutorial
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+However if we run \fBtask list\fP we will still see the completed task:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task list
+| ID                               | Created Date               | Completed Date             | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None                       | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None                       | 1.0      | another default priority task   | default |
+| 265b67ff298643dbb05950f3394a5ab0 | 2018\-09\-23 18:46:30.082289 | 2018\-09\-23 18:55:24.277754 | 2.0      | a high priority task            | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+As your task list grows finding tasks that need to be done using \fBtask list\fP
+can be overwhelming. Luckily, Taskforge has a \&../how_tos/query_language we can use to
+search tasks. See the linked documentation for full instructions, for our
+purposes we simply need to run the following:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task query completed = false
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None           | 1.0      | another default priority task   | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This shows us all tasks which are incomplete. This is such a common query that
+there is a shortcut command for displaying this information \fBtask todo\fP:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task todo
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None           | 1.0      | another default priority task   | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Re\-ordering tasks
+.sp
+Sometimes a task which you added for later will become the top priority. Such is
+the shifting world of ToDo lists. To accommodate this Taskforge has the \fBtask
+workon\fP command. To demonstrate let\(aqs make \fBanother default priority task the
+top priority\fP\&. To do this let\(aqs find its ID with \fBtask todo\fP:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task todo
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None           | 1.0      | another default priority task   | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Then run the \fBtask workon\fP command providing the ID of the task we want to
+re\-prioritize:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task workon 1e634ced06d64093a747f38da024f9a6
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBtask next\fP should now show \fBanother default priority task\fP as the
+current task:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task next
+1e634ced06d64093a747f38da024f9a6: another default priority task
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+It accomplishes this by determining the priority of the current task and adding
+\fB0.1\fP to it. If we run \fBtask todo\fP we can see this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task todo
+| ID                               | Created Date               | Completed Date | Priority | Title                           | Context |
+| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\- |
+| eabdeee413ef442fa68c994119d817d2 | 2018\-09\-23 18:41:18.858741 | None           | 1.0      | complete the taskforge tutorial | default |
+| 1e634ced06d64093a747f38da024f9a6 | 2018\-09\-23 18:46:05.198426 | None           | 1.1      | another default priority task   | default |
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Let\(aqs go ahead and complete this task now. A shortcut that we did not mention
+earlier is that if \fBtask done\fP is given no arguments it will complete the
+current task:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ task done
+$ task next
+eabdeee413ef442fa68c994119d817d2: complete the taskforge tutorial
+$
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This is a useful shortcut since most often you\(aqll be completing the current task
+as you work through your task list.
+.SS Further Reading
+.sp
+You can safely run \fBtask done\fP now since you\(aqve completed the getting started
+guide for Taskforge. From here you can start looking at using different
+\&../lists/index or see the \&../advanced_usage/index guide to find out how
+to integrate Taskforge with external reporting tools.
+.INDENT 0.0
+.IP \(bu 2
+\&../tutorials/index
+.IP \(bu 2
+\&../how_tos/configuring_taskforge
+.IP \(bu 2
+\&../how_tos/query_language
+.IP \(bu 2
+\&../lists/index
+.IP \(bu 2
+\&../advanced_usage/index
+.UNINDENT
+.SH QUERY LANGUAGE
+.SH CONFIGURING TASKFORGE
+.sp
+Taskforge as described above will work with a SQLite database with no
+configuration. However if you would like to configure Taskforge this section
+will get you started with a configuration file that will continue working as
+above.
+.sp
+The primary location for a Taskforge configuration file is in
+\fB$HOME/.taskforge.d/config.toml\fP\&. You can create this file using your favorite
+file manager, however below we will demonstrate how to do so via a Unix
+terminal:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ mkdir ~/.taskforge.d
+$ touch ~/.taskforge.d/config.toml
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH LISTS
+.sp
+Something something about lists
+.SS SQLite List
+.sp
+Why use the SQLite list
+.SS MongoDB List
+.sp
+Why use the MongoDB list
+.SH CLI COMMANDS
+.SS task add
+.sp
+Usage: task add [options] [<title>...]
+.sp
+Add or import tasks into the list.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-p \ <priority>\fP,\fB \ \-\-priority \ <priority>
+Create the task with the indicated
+priority, this can be an integer or
+float [default: 1.0]
+.TP
+.BI \-b \ <body>\fP,\fB \ \-\-body \ <body>
+The body or "description" of the task
+.TP
+.BI \-c \ <context>\fP,\fB \ \-\-context \ <context>
+The context in which to create the task
+.TP
+.B \-t\fP,\fB  \-\-top
+Make this task the top priority
+.UNINDENT
+.TP
+.B Import Options:
+.INDENT 7.0
+.TP
+.BI \-f \ <file>\fP,\fB \ \-\-from\-file \ <file>
+Import tasks from the indicated JSON file
+.UNINDENT
+.UNINDENT
+.sp
+If an import option is provided all other options are ignored.
+.SS task next
+.sp
+Usage: task next [options]
+.sp
+Print the "next" or "current" task. This is calculated by the list as the
+highest priority, oldest task in the list.
+.sp
+Default output format is:
+.sp
+$TASK_ID: $TASK_TITLE
+.sp
+You can modify the output with the options below.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.B \-i\fP,\fB  \-\-id\-only
+Print only the task ID
+.TP
+.B \-t\fP,\fB  \-\-title\-only
+Print only the task title
+.UNINDENT
+.UNINDENT
+.SS task query
+.sp
+Usage: task query [options] [<query>...]
+.sp
+Search or list tasks in this list.
+.sp
+QUERY will be concatenated using spaces and will be interpreted using the
+Taskforge Query Language.
+.sp
+If no query is provided all tasks will be returned.
+.sp
+You can view information about the Taskforge Query Language using \(aqtask help ql\(aq
+or by visiting:
+.sp
+\fI\%http://taskforge.io/docs/query_language\fP
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-o \ <format>\fP,\fB \ \-\-output \ <format>
+How to display the tasks which match the
+query. Available formats are: json, csv,
+table, text which are described below.
+[default: table]
+.UNINDENT
+.UNINDENT
+.sp
+output formats:
+.INDENT 0.0
+.INDENT 3.5
+Text output format is the same as for task next where each task will be
+printed on one line with the format:
+.sp
+$TASK_ID: $TASK_TITLE
+.sp
+Table output format lists tasks in an ascii table and it looks like this:
+.nf
+ID  | Created Date  | Completed Date  | Priority  | Title  | Context  |
+\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\- | \-\-\-\-\-\- | \-\-\-\-\-\-\-\- |
+$ID | $CREATED_DATE | $COMPLETED_DATE | $PRIORITY | $TITLE | $CONTEXT |
+.fi
+.sp
+.sp
+JSON output format will "pretty print" a JSON array of the tasks in the list
+to stdout.  They will be properly indented 4 spaces and should be fairly
+human readable.  This is useful for migrating from one list implementation
+for another as you can redirect this output to a file then import it with:
+\(aqtask add \-\-from\-file $YOUR_JSON_FILE\(aq
+.sp
+CSV will output all task metadata in a csv format. It will write to stdout
+so you can use shell redirection to put it into a csv file like so:
+.sp
+\(aqtask list \-\-output csv > my_tasks.csv\(aq
+.sp
+This is useful for importing tasks into spreadsheet programs like Excel.
+.UNINDENT
+.UNINDENT
+.SS task todo
+.sp
+Usage: task todo [options]
+.sp
+A convenience command for listing tasks which are incomplete.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-o \ <format>\fP,\fB \ \-\-output \ <format>
+How to display the tasks which match the
+query. Available formats are: json, csv,
+table, text. See \(aqtask list \-\-help\(aq for
+more information on how each format is
+displayed. [default: table]
+.UNINDENT
+.UNINDENT
+.SS task edit
+.sp
+Usage: task edit [<ID>]
+.sp
+Edit the task indicated by ID as a toml file. If no ID given opens the current
+task.
+.sp
+Will use $EDITOR if set and if not will attempt to find an editor based on
+platform.
+.SS task complete
+.sp
+Usage: task complete [<ID>...]
+.sp
+Complete tasks by ID. If no IDs are provided then the current task indicated by
+\(aqtask next\(aq is completed.
+.SS task workon
+.sp
+Usage: task workon <ID>
+.sp
+Find task with ID and make it so the priority of the task is 0.1 higher than
+that of the current highest priority task. Effectively making it the "current"
+task in Taskforge terms.
+.SH ADVANCED USAGE
+.SH CONTRIBUTING
+.sp
+Taskforge welcomes any and all contributions. Following the processes and
+procedures laid out in these documents gives your contributions the highest
+chances of being accepted.
+.sp
+As always you should follow our code_of_conduct
+.sp
+There are three major ways you can contribute to Taskforge:
+.SS Contributing Documentation
+.sp
+Contributing documentation to Taskforge, like all contributions, is highly
+appreciated. This document will help you set up your environment and follow our
+documentation best practices.
+.sp
+While not required for writing documentation if you would like to build the docs
+and see your changes as they\(aqll be on the website you will need Python version
+3.4 or greater installed. If you need to install Python, you can \fI\%go to Python\(aqs
+website\fP to install it on your platform.
+.SS Getting the Code
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+GitHub does provide a web editor and automates some of this process, if you
+just want to make edits to an existing document you can skip this section and
+click the "pencil" icon in the top right of the document you want to edit.
+.UNINDENT
+.UNINDENT
+.sp
+Before you begin writing documentation for Taskforge you will need to download
+the repository. To do this open your shell of choice and run the following
+command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ git clone https://github.com/chasinglogic/taskforge
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Now use GitHub to fork the project to create your own remote which you will work
+from. When viewing the repo above in your browser, click the fork button in the
+top right hand corner.
+.sp
+GitHub provides \fI\%documentation on maintaining a fork\fP which gives a good explanation
+of what forking means and how to work with a fork.
+.sp
+Once you\(aqve created your fork copy the clone URL and run the command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ git remote add fork $YOUR_CLONE_URL
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Replacing \fB$YOUR_CLONE_URL\fP with the URL you just copied from GitHub.
+.SS Requirements for Submitting Documentation
+.sp
+All documentation needs to meet these requirements:
+.INDENT 0.0
+.IP \(bu 2
+Passes our documentation lint step in CI
+.IP \(bu 2
+Uses no offensive language
+.IP \(bu 2
+Does not break rendering of the HTML site
+.IP \(bu 2
+Must live under \fBsrc/docs\fP and written in \fI\%reStructuredText\fP
+.UNINDENT
+.sp
+We lint our documentation using \fI\%Vale\fP it
+is a CLI tool for linting prose and is syntax aware. You can install it using
+their instructions at the link above.
+.sp
+It\(aqs not required that you run the linting locally but will save you time since
+Travis CI can take some to return a result. You can lint your documents by
+passing them to Vale as shown:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ vale src/docs/$YOUR_DOCUMENT_PATH
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS How We Categorize Documentation
+.sp
+The Taskforge project has 4 categories of documentation. How\-to\(aqs, Tutorials,
+Designs, and Usage / Reference documentation. Each category is explained below:
+.INDENT 0.0
+.IP \(bu 2
+A tutorial:
+.INDENT 2.0
+.IP \(bu 2
+is learning\-oriented
+.IP \(bu 2
+allows the newcomer to get started
+.IP \(bu 2
+is a lesson
+.UNINDENT
+.UNINDENT
+.sp
+Analogy: teaching a small child how to cook
+How\-to guides
+.INDENT 0.0
+.IP \(bu 2
+A how\-to guide:
+.INDENT 2.0
+.IP \(bu 2
+is goal\-oriented
+.IP \(bu 2
+shows how to solve a specific problem
+.IP \(bu 2
+is a series of steps
+.UNINDENT
+.UNINDENT
+.sp
+Analogy: a recipe in a cookery book
+Explanation
+.INDENT 0.0
+.IP \(bu 2
+A design:
+.INDENT 2.0
+.IP \(bu 2
+is understanding\-oriented
+.IP \(bu 2
+explains
+.IP \(bu 2
+provides background and context
+.UNINDENT
+.UNINDENT
+.sp
+Analogy: an article on culinary social history
+Reference
+.INDENT 0.0
+.IP \(bu 2
+A usage guide:
+.INDENT 2.0
+.IP \(bu 2
+is information\-oriented
+.IP \(bu 2
+describes the machinery
+.IP \(bu 2
+is accurate and complete
+.UNINDENT
+.UNINDENT
+.sp
+Analogy: a reference encyclopaedia article
+.sp
+These categories and explanations are taken from \fI\%this article\fP by Daniele Procida.
+.sp
+Most of these have corresponding folders in \fBsrc/docs\fP\&. Try to place your
+documents in the appropriate category folder using your best judgement. If
+you\(aqre not sure pick one and it can be discussed during code review.
+.SS Contributing Code
+.sp
+Contributing code to Taskforge, like all contributions, is highly appreciated.
+This document will help you set up your development environment and follow our
+coding best practices.
+.sp
+This document assumes that you have already installed Python version 3.4 or
+greater. If not you can \fI\%go to Python\(aqs website\fP to
+install it on your platform.
+.SS Contents
+.INDENT 0.0
+.IP \(bu 2
+\fI\%Contributing Code\fP
+.INDENT 2.0
+.IP \(bu 2
+\fI\%Getting the Code\fP
+.IP \(bu 2
+\fI\%Setting Up A Development Environment\fP
+.IP \(bu 2
+\fI\%Requirements for Submitting Code\fP
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+Anywhere you see \fBpython\fP if you\(aqre on Mac OS or an older Linux distro then
+you will need to change it to \fBpython3\fP\&.
+.UNINDENT
+.UNINDENT
+.SS Getting the Code
+.sp
+Before you begin development on Taskforge you will need to download the
+repository. To do this open your shell of choice and run the following command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ git clone https://github.com/chasinglogic/taskforge
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Now use GitHub to fork the project to create your own remote which you will work
+from. When viewing the repo above in your browser, click the fork button in the
+top right hand corner.
+.sp
+GitHub provides \fI\%this article\fP
+which gives a good explanation of what forking means and how to work with a fork.
+.sp
+Once you\(aqve created your fork copy the clone URL and run the command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ git remote add fork $YOUR_CLONE_URL
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Replacing \fB$YOUR_CLONE_URL\fP with the URL you just copied from GitHub.
+.SS Setting Up A Development Environment
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+It\(aqs recommended that you set up a Python virtualenv before doing any of the
+steps below. A great explanation of how and why to use a virtualenv can be
+found in \fI\%Python\(aqs venv module documentation\fP
+.UNINDENT
+.UNINDENT
+.sp
+First lets cd into the repository we created earlier if you haven\(aqt already:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ cd taskforge
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+To install the development tools and libraries you need you can run these
+commands:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ python \-m pip install \-\-editable .
+$ python \-m pip install \-r requirements.dev.txt
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This will install the testing and linting tools you\(aqll need to make sure your
+code is ready for review.
+.SS Requirements for Submitting Code
+.sp
+All code needs to meet these requirements:
+.INDENT 0.0
+.IP \(bu 2
+If new code:
+.INDENT 2.0
+.IP \(bu 2
+Write a design document and complete the \&../processes/design
+.IP \(bu 2
+For each goal in the design write a test
+.IP \(bu 2
+Write the code to make the tests pass in CI
+.UNINDENT
+.IP \(bu 2
+If fixing a bug:
+.INDENT 2.0
+.IP \(bu 2
+Write a test which reproduces the bug
+.IP \(bu 2
+Write the code fixing that test, it must pass in CI
+.UNINDENT
+.IP \(bu 2
+All code must pass lint using our pylintrc which is in the root of the
+repository
+.UNINDENT
+.sp
+You can run the linting steps locally with these commands. Although, it\(aqs worth
+noting most text editors will integrate with these tools automatically:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ python \-m pylint src tests
+$ python \-m pydocstyle src
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+For testing we use pytest. To run the test suite you can use the command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ PYTHONPATH="$PYTHONPATH:src" python \-m pytest \-m \(aqnot slow\(aq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Any tests which call external services or databases must have the pytest marker
+indicating it as slow. To run those tests, remove the marker flag from the
+previous command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ PYTHONPATH="$PYTHONPATH:src" python \-m pytest
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+For unix systems which have \fBmake\fP installed you can perform the above
+commands with:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ make lint
+$ make test
+$ make test\-all
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Reporting Bugs and Requesting Features
+.SS Code of Conduct
+.SS 1. Purpose
+.sp
+A primary goal of the Taskforge project is to be inclusive to the largest number
+of contributors, with the most varied and diverse backgrounds possible. As such,
+we are committed to providing a friendly, safe and welcoming environment for
+all, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic
+status, political belief, religion (or lack thereof), and any other
+characteristic one would use to try to divide people.
+.sp
+This code of conduct outlines our expectations for all those who
+participate in our community, as well as the consequences for
+unacceptable behavior.
+.sp
+We invite all those who participate in the Taskforge project to help us
+create safe and positive experiences for everyone.
+.SS 2. Open Source Citizenship
+.sp
+A supplemental goal of this Code of Conduct is to increase open
+source citizenship by encouraging participants to
+recognize and strengthen the relationships between our actions and their
+effects on our community.
+.sp
+Communities mirror the societies in which they exist and positive action
+is essential to counteract the many forms of inequality and abuses of
+power that exist in society.
+.sp
+If you see someone who is making an extra effort to ensure our community
+is welcoming, friendly, and encourages all participants to contribute to
+the fullest extent, we want to know.
+.SS 3. Expected Behavior
+.sp
+The following behaviors are expected and requested of all community
+members:
+.INDENT 0.0
+.IP \(bu 2
+Participate in an authentic and active way. In doing so, you
+contribute to the health and longevity of this community.
+.IP \(bu 2
+Exercise consideration and respect in your speech and actions.
+.IP \(bu 2
+Attempt collaboration before conflict.
+.IP \(bu 2
+Refrain from demeaning, discriminatory, or harassing behavior and
+speech.
+.. vale off
+.IP \(bu 2
+Be mindful of your surroundings and of your fellow participants.
+Alert community leaders if you notice a dangerous situation, someone
+in distress, or violations of this Code of Conduct, even if they seem
+inconsequential.
+.. vale on
+.IP \(bu 2
+Remember that community event venues may be shared with members of
+the public; please be respectful to all patrons of these locations.
+.UNINDENT
+.SS 4. Unacceptable Behavior
+.sp
+The following behaviors are considered harassment and are unacceptable
+within our community:
+.INDENT 0.0
+.IP \(bu 2
+Violence, threats of violence or violent language directed against
+another person.
+.IP \(bu 2
+Sexist, racist, homophobic, transphobic, ableist or otherwise
+discriminatory jokes and language.
+.IP \(bu 2
+Posting or displaying sexually explicit or violent material.
+.IP \(bu 2
+Posting or threatening to post other people’s personally identifying
+information (“doxing”).
+.IP \(bu 2
+Personal insults, particularly those related to gender, sexual
+orientation, race, religion, or disability.
+.IP \(bu 2
+Inappropriate photography or recording. Innapropriate in this context means
+anyone who does not give express permission to be photographed or recorded.
+.IP \(bu 2
+Inappropriate physical contact. You should have someone’s consent
+before touching them.
+.IP \(bu 2
+Unwelcome sexual attention. This includes, sexualized comments or
+jokes; inappropriate touching, groping, and unwelcomed sexual
+advances.
+.IP \(bu 2
+Deliberate intimidation, stalking or following (online or in person).
+.IP \(bu 2
+Advocating for, or encouraging, any of the above behavior.
+.IP \(bu 2
+Sustained disruption of community events, including talks and
+presentations.
+.UNINDENT
+.SS 6. Consequences of Unacceptable Behavior
+.sp
+Unacceptable behavior from any community member, including sponsors and
+those with decision\-making authority, will not be tolerated.
+.sp
+Anyone asked to stop unacceptable behavior is expected to comply
+immediately.
+.sp
+If a community member engages in unacceptable behavior, the community
+organizers may take any action they deem appropriate, up to and
+including a temporary ban or permanent expulsion from the community
+without warning (and without refund in the case of a paid event).
+.SS 7. Reporting Guidelines
+.sp
+If you are subject to or witness unacceptable behavior, or have any other
+concerns, please notify a community organizer as soon as possible. Send an email
+to \fI\%The Project Maintainers\fP\&.
+.sp
+Additionally, community organizers are available to help community
+members engage with local law enforcement or to otherwise help those
+experiencing unacceptable behavior feel safe. In the context of
+in\-person events, organizers will also provide escorts as desired by the
+person experiencing distress.
+.SS 8. Addressing Grievances
+.sp
+If you feel you have been falsely or unfairly accused of violating this Code of
+Conduct, you should notify \fI\%The Project Maintainers\fP with a concise description of your
+grievance.
+.SS 9. Scope
+.sp
+We expect all community participants (contributors, paid or otherwise;
+sponsors; and other guests) to abide by this Code of Conduct in all
+community venues–online and in\-person–as well as in all one\-on\-one
+communications pertaining to community business.
+.sp
+This code of conduct and its related procedures also applies to
+unacceptable behavior occurring outside the scope of community
+activities when such behavior has the potential to adversely affect the
+safety and well\-being of community members. Such as when displaying association
+with the project on the forum where the communication occurs i.e., a tweet and
+your Twitter bio.
+.SS 10. Contact Info
+.sp
+Send all questions or concerns to: \fI\%The Project Maintainers\fP
+.SS 11. License and Attribution
+.sp
+This Code of Conduct is derived from the Citizen Code of Conduct.
+.sp
+The Citizen Code of Conduct is distributed by \fI\%Stumptown
+Syndicate\fP under a \fI\%Creative Commons
+Attribution\-ShareAlike
+license\fP\&.
+.sp
+Portions of text derived from the \fI\%Django Code of
+Conduct\fP and the \fI\%Geek
+Feminism Anti\-Harassment
+Policy\fP\&.
+.sp
+Additionally, make sure you read our Git Workflow documentation if contributing
+documentation or code.
+.SS Git Workflow
+.sp
+Taskforge uses a "no merge commits" strategy for managing git branches and pull
+requests.
+.sp
+Whenever you are about to submit a PR follow these steps to ensure a smooth
+review process. Make sure to replace \fBorigin\fP in these examples with whatever
+remote you have the primary repository configured as. At the time of this
+writing that would be \fBhttp://github.com/chasinglogic/taskforge\fP\&.
+.INDENT 0.0
+.IP 1. 3
+Download the latest changes using \fBgit fetch \-\-all\fP
+.IP 2. 3
+Now that you\(aqve downloaded the latest changes you can "rebase" your working
+branch on the latest master. A detailed description of rebasing is outside
+the scope of this article, but in english it will re\-apply your changes on
+top of master. To do this run:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+git rebase origin/master
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP 3. 3
+Now your changes are the most recent commits. You\(aqll need to push your
+rebased branch to the remote, if you\(aqve already pushed before you\(aqll need to
+do a force push. The command for doing this is:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+git push \-\-force\-with\-lease
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP 4. 3
+Now that\(aqs done you can submit your PR and your branch will have the latest
+changes from master.
+.UNINDENT
+.SS Git Best Practices
+.sp
+Here are some best practices that while not strictly enforced, can come up
+during code review:
+.SS Commit Message Formatting
+.sp
+All commit messages should ideally follow this format:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+A commit summary that is less than 80 characters.
+
+Followed by a blank newline and a longer description if necesary. Not all
+changes will need a description like this one. The 80 character limit in the
+summary is not a hard rule so use your best judgement.
+
+If you\(aqre combining more than one fix or chang into a commit you should list
+them in a bullet point format like so:
+
+ \- Fix typo in docstring
+ \- Corrected bad link in README
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+With the following format, it\(aqs acceptable to throw smaller changes into one
+commit with a bigger change. The most important thing is that I should be able
+to tell what the commit changed by reading your message and not the diff.
+.sp
+The added benefit of this format is that GitHub will automatically populate your
+Pull Request with this information.
+.sp
+We will not merge commit messages that are offensive, i.e. violating our
+code_of_conduct, or non\-helpful, such as \fBremove incorrectly added
+file\fP\&. You will need to rebase and drop these commits and correct your commit
+history first.
+.SS No Merge Commits
+.sp
+We avoid merge commits on master, so if your pull request includes them we will
+ask you to remove them.
+.SS Commit Limits
+.sp
+While for some features it\(aqs understandable that you will have a lot of commits,
+generally speaking, a good Pull Request should not generally contain any more
+than 5 commits. Again this is not a hard and fast rule, but if you find yourself
+with 5+ commits rethink how you\(aqve written your commits and consider squashing
+some of them.
+.SS Topic Branches
+.sp
+When working on a bug or feature you should create a topic branch for that work.
+This isolates your commits in a way that prevents you from having to remove
+erroneous commits later. A topic branch should always come from master and
+should have a descriptive name, at least to you. The commands for creating a
+topic branch are:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+git fetch \-\-all
+git branch origin/master my\-topic\-branch
+git checkout my\-topic\-branch
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This does make the assumption that \fBorigin\fP is the master repository. If
+\fBorigin\fP is instead pointing to your fork change it to whatever your forks
+remote name is.
+.SS Further Resources
+.sp
+Here are some valuable resources you can use when you find yourself stuck on
+git or just want a better understanding of the topics mentioned here:
+.INDENT 0.0
+.IP \(bu 2
+\fI\%Writing a good commit message\fP
+.IP \(bu 2
+\fI\%Introduction to working with git history\fP
+.IP \(bu 2
+\fI\%Git communities\fP
+.IP \(bu 2
+\fI\%Rebase reference page\fP
+.UNINDENT
+.sp
+If you\(aqre looking to design a feature you can read about our design process at:
+.SS Design Document Process
+.sp
+This describes the design document process for Taskforge. All new features must
+go through the design process as described here before the any code is written.
+.SS Why We Write Design Documents
+.sp
+When the idea for a feature is first introduced we, as human beings, can look at
+it with rose\-colored glasses. It\(aqs much easier to just write code for features
+than to think about them and, often once we start implementing them we realize
+that the problem is both more difficult and has more edge cases than we
+originally imagined.
+.sp
+Moving all ideas and features through a formal design process greatly improves
+code quality and ensures that everything we build fits with the vision of the
+maintainers of the project. Another benefit is that it gives us a reference point to look back on when wondering why a feature was created, or how that
+feature was implemented.
+.SS The Design Process
+.sp
+The design process is as follows:
+.INDENT 0.0
+.IP 1. 3
+Find an issue labelled as "needs design"
+.IP 2. 3
+As for any code or documentation change, clone the repository and make a
+branch. On this branch write a design doc then submit a Pull Request.
+.INDENT 3.0
+.IP \(bu 2
+Design docs go under \fBsrc/docs/designs\fP
+.IP \(bu 2
+All design docs should use the design doc template found at
+\fBsrc/docs/designs/template.rst\fP
+.IP \(bu 2
+List designs have their own template which is slightly different. It is
+located at \fBsrc/docs/designs/list_template.rst\fP
+.UNINDENT
+.IP 3. 3
+The maintainers will review your pull request
+.IP 4. 3
+Once the maintainers have approved your design the pull request will be
+labelled with "Request for Comments"
+.INDENT 3.0
+.IP \(bu 2
+From this point anyone in the Taskforge community have a chance to provide
+input and/or further the discussion.
+.IP \(bu 2
+If there is a disagreement the maintainers will have resolve them and
+have final say on changes to the design
+.UNINDENT
+.IP 5. 3
+The Pull Request will stay in the RFC phase for 10 days
+.IP 6. 3
+After 10 days if all comments and issues have been resolved the PR will be
+merged and feature will be ready for work.
+.IP 7. 3
+The maintainers will create a new issue to implement the design and close the
+"needs design" issue.
+.UNINDENT
+.sp
+You are then free to pick up the implementation issue or leave it for someone
+else to complete.
+.sp
+Use the /designs/template to get started.
+.SH API
+.SS task_forge package
+.SS Subpackages
+.SS task_forge.cli package
+.SS Submodules
+.SS task_forge.cli.add_cmd module
+.sp
+Usage: task add [options] [<title>...]
+.sp
+Add or import tasks into the list.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-p \ <priority>\fP,\fB \ \-\-priority \ <priority>
+Create the task with the indicated
+priority, this can be an integer or
+float [default: 1.0]
+.TP
+.BI \-b \ <body>\fP,\fB \ \-\-body \ <body>
+The body or "description" of the task
+.TP
+.BI \-c \ <context>\fP,\fB \ \-\-context \ <context>
+The context in which to create the task
+.TP
+.B \-t\fP,\fB  \-\-top
+Make this task the top priority
+.UNINDENT
+.TP
+.B Import Options:
+.INDENT 7.0
+.TP
+.BI \-f \ <file>\fP,\fB \ \-\-from\-file \ <file>
+Import tasks from the indicated JSON file
+.UNINDENT
+.UNINDENT
+.sp
+If an import option is provided all other options are ignored.
+.INDENT 0.0
+.TP
+.B task_forge.cli.add_cmd.import_file(filename, task_list)
+Import tasks from filename into the configured task list
+.UNINDENT
+.SS task_forge.cli.complete_cmd module
+.sp
+Usage: task complete [<ID>...]
+.sp
+Complete tasks by ID. If no IDs are provided then the current task indicated by
+\(aqtask next\(aq is completed.
+.INDENT 0.0
+.TP
+.B task_forge.cli.complete_cmd.run(args)
+Add the next command to parser.
+.UNINDENT
+.SS task_forge.cli.next_cmd module
+.sp
+Usage: task next [options]
+.sp
+Print the "next" or "current" task. This is calculated by the list as the
+highest priority, oldest task in the list.
+.sp
+Default output format is:
+.sp
+$TASK_ID: $TASK_TITLE
+.sp
+You can modify the output with the options below.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.B \-i\fP,\fB  \-\-id\-only
+Print only the task ID
+.TP
+.B \-t\fP,\fB  \-\-title\-only
+Print only the task title
+.UNINDENT
+.UNINDENT
+.SS task_forge.cli.query_cmd module
+.sp
+Usage: task query [options] [<query>...]
+.sp
+Search or list tasks in this list.
+.sp
+QUERY will be concatenated using spaces and will be interpreted using the
+Taskforge Query Language.
+.sp
+If no query is provided all tasks will be returned.
+.sp
+You can view information about the Taskforge Query Language using \(aqtask help ql\(aq
+or by visiting:
+.sp
+\fI\%http://taskforge.io/docs/query_language\fP
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-o \ <format>\fP,\fB \ \-\-output \ <format>
+How to display the tasks which match the
+query. Available formats are: json, csv,
+table, text which are described below.
+[default: table]
+.UNINDENT
+.UNINDENT
+.sp
+output formats:
+.INDENT 0.0
+.INDENT 3.5
+Text output format is the same as for task next where each task will be
+printed on one line with the format:
+.sp
+$TASK_ID: $TASK_TITLE
+.sp
+Table output format lists tasks in an ascii table and it looks like this:
+.nf
+ID  | Created Date  | Completed Date  | Priority  | Title  | Context  |
+\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\-\-\-\-\-\-\- | \-\-\-\-\-\-\-\-\- | \-\-\-\-\-\- | \-\-\-\-\-\-\-\- |
+$ID | $CREATED_DATE | $COMPLETED_DATE | $PRIORITY | $TITLE | $CONTEXT |
+.fi
+.sp
+.sp
+JSON output format will "pretty print" a JSON array of the tasks in the list
+to stdout.  They will be properly indented 4 spaces and should be fairly
+human readable.  This is useful for migrating from one list implementation
+for another as you can redirect this output to a file then import it with:
+\(aqtask add \-\-from\-file $YOUR_JSON_FILE\(aq
+.sp
+CSV will output all task metadata in a csv format. It will write to stdout
+so you can use shell redirection to put it into a csv file like so:
+.sp
+\(aqtask list \-\-output csv > my_tasks.csv\(aq
+.sp
+This is useful for importing tasks into spreadsheet programs like Excel.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.print_csv(tasks)
+Print a list of tasks as csv to stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.print_json(tasks)
+Print a list of tasks as json to stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.print_table(tasks)
+Print an ASCII table of the tasks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.print_tasks(tasks, output=\(aqtable\(aq)
+Print tasks using the print function which corresponds to output.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.print_text(tasks)
+Print the __repr__ of all tasks in the list.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.query_cmd.run(args)
+Add the query command to parser.
+.UNINDENT
+.SS task_forge.cli.todo_cmd module
+.sp
+Usage: task todo [options]
+.sp
+A convenience command for listing tasks which are incomplete.
+.INDENT 0.0
+.TP
+.B Options:
+.INDENT 7.0
+.TP
+.BI \-o \ <format>\fP,\fB \ \-\-output \ <format>
+How to display the tasks which match the
+query. Available formats are: json, csv,
+table, text. See \(aqtask list \-\-help\(aq for
+more information on how each format is
+displayed. [default: table]
+.UNINDENT
+.UNINDENT
+.SS task_forge.cli.utils module
+.sp
+Decorators and configuration file loading for the CLI.
+.INDENT 0.0
+.TP
+.B task_forge.cli.utils.config(func)
+Load config and inject it as the keyword argument cfg.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.utils.default_config()
+Return a dict with the default config values.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.utils.inject_list(func)
+Injects a kwarg task_list which contains a configured list object.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.utils.load_config()
+Load the config file from the default locations.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.utils.load_list(cfg)
+Load the correct List implementation based on the provided config.
+.UNINDENT
+.SS task_forge.cli.workon_cmd module
+.sp
+Usage: task workon <ID>
+.sp
+Find task with ID and make it so the priority of the task is 0.1 higher than
+that of the current highest priority task. Effectively making it the "current"
+task in Taskforge terms.
+.INDENT 0.0
+.TP
+.B task_forge.cli.workon_cmd.top_priority(task_list)
+Return a priority that is 0.1 more than the current highest priority.
+.UNINDENT
+.SS Module contents
+.sp
+Usage: task [\-\-help] [\-\-version] <command> [<args>...]
+.sp
+A task management CLI that integrates with external services.
+.INDENT 0.0
+.TP
+.B Commands:
+help                Print usage information about task commands
+add (new, a)        Add a new task to the list
+next (n)            Print the next or "current" task in the list
+todo                Print incomplete tasks in the list
+edit (e)            Edit task data as a toml file
+complete (done, d)  Complete tasks in the list.
+query (q, s, list)  Search or list tasks in the list
+workon              Move a task to the top of the list
+.UNINDENT
+.sp
+See \(aqtask help <command>\(aq for more information on a specific command.
+.INDENT 0.0
+.TP
+.B task_forge.cli.main()
+CLI entrypoint, handles subcommand parsing
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.cli.print_lists()
+Print installed list implementations
+.UNINDENT
+.SS task_forge.lists package
+.SS Submodules
+.SS task_forge.lists.load module
+.sp
+Implements loading lists from entry_points
+.sp
+List plugins are created as python modules using entry_points. The entry_point
+name should be a human readable name. It is used when loading a list such as
+\(aqsqlite\(aq or \(aqmongodb\(aq. When load is called we should get back a class which
+inherits  from the abstract class \(aqList\(aq in task_forge.lists.
+.INDENT 0.0
+.TP
+.B task_forge.lists.load.get_all_lists()
+Return a list of Tuples of list names to class objects
+.UNINDENT
+.INDENT 0.0
+.TP
+.B task_forge.lists.load.get_list(name)
+Return the list implementation which corresponds to name.
+.sp
+Return None if not found.
+.UNINDENT
+.SS task_forge.lists.mongo module
+.sp
+Provides a MongoDB backed list implementation.
+.INDENT 0.0
+.TP
+.B class task_forge.lists.mongo.List(host=\(aqlocalhost\(aq, port=27017, db=\(aqtask_forge\(aq, collection=\(aqtasks\(aq, username=None, password=None, ssl=False)
+Bases: \fI\%task_forge.lists.List\fP
+.sp
+A MongoDB backed list implementation.
+.INDENT 7.0
+.TP
+.B add(task)
+Add a task to the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_multiple(tasks)
+Add multiple tasks to the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_note(task_id, note)
+Add note to a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B complete(task_id)
+Complete a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B current()
+Return the current task.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B find_by_id(task_id)
+Find a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B list()
+Return a python list of the Task in this List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B search(ast)
+Evaluate the AST and return a List of matching results.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B update(task)
+Update a task in the list.
+.sp
+The original is retrieved using the task_id of the given task.
+.UNINDENT
+.UNINDENT
+.SS task_forge.lists.sqlite module
+.sp
+Provides a SQLite 3 backed list implementation.
+.INDENT 0.0
+.TP
+.B class task_forge.lists.sqlite.List(directory=\(aq\(aq, file_name=\(aq\(aq, create_tables=False)
+Bases: \fI\%task_forge.lists.List\fP
+.sp
+A SQLite 3 backed list implementation.
+.INDENT 7.0
+.TP
+.B add(task)
+Add a task to the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_multiple(tasks)
+Add multiple tasks to the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_note(task_id, note)
+Add note to a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B complete(task_id)
+Complete a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B current()
+Return the current task.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B find_by_id(task_id)
+Find a task by task_id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B list()
+Return a python list of the Task in this List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B static note_from_row(row)
+Convert a SQL row tuple back into a Note object.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B search(ast)
+Evaluate the AST and return a List of matching results.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B task_from_row(row)
+Convert a SQL row tuple back into a Task object.
+.sp
+Raises a NotFoundError if row is None
+.UNINDENT
+.INDENT 7.0
+.TP
+.B static task_to_row(task)
+Convert a task to a tuple with the correct column order.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B update(task)
+Update a task in the list.
+.sp
+The original is retrieved using the id of the given task.
+.UNINDENT
+.UNINDENT
+.SS Module Contents
+.sp
+Contains the List abstract base class as well as error types.
+.INDENT 0.0
+.TP
+.B exception task_forge.lists.InvalidConfigError
+Bases: \fI\%Exception\fP
+.sp
+Indicate an invalid configuration was provided to the List.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.lists.List
+Bases: \fI\%abc.ABC\fP
+.sp
+An base class that all list implementations must derive from.
+.INDENT 7.0
+.TP
+.B add(task)
+Add a task to the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_multiple(tasks)
+Add multiple tasks to the List.
+.sp
+Ideally should be more efficient resource utilization.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B add_note(task_id, note)
+Add note to a task by id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B complete(task_id)
+Complete a task by id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B current()
+Return the current task.
+.sp
+The current task is defined as the oldest uncompleted
+task in the List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B find_by_id(task_id)
+Find a task by id.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B list()
+Return a python list of the Task in this List.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B search(ast)
+Evaluate the AST and return a List of matching results.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B update(task)
+Update a task in the list.
+.sp
+The original is retrived using the id of the given task.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B exception task_forge.lists.NotFoundError(task_id=None)
+Bases: \fI\%Exception\fP
+.sp
+Indicate a task with the given id does not exist.
+.UNINDENT
+.SS task_forge.ql package
+.SS Submodules
+.SS task_forge.ql.ast module
+.sp
+AST and Expression classes for the Taskforge query language.
+.INDENT 0.0
+.TP
+.B class task_forge.ql.ast.AST(expression)
+Bases: \fI\%object\fP
+.sp
+Abstract syntax tree for the Taskforge query language.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.ql.ast.Expression(token, left=None, right=None)
+Bases: \fI\%object\fP
+.sp
+An expression is a statement that yields a value.
+.INDENT 7.0
+.TP
+.B date_formats = [\(aq%Y\-%m\-%d %I:%M %p\(aq, \(aq%Y\-%m\-%d %I:%M%p\(aq, \(aq%Y\-%m\-%d %I:%M:%S %p\(aq, \(aq%Y\-%m\-%d %I:%M:%S%p\(aq, \(aq%Y\-%m\-%d %H:%M:%S\(aq, \(aq%Y\-%m\-%d %H:%M\(aq, \(aq%Y\-%m\-%d\(aq]
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_and_infix()
+Indicate if this is a logical AND expression.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_boolean_literal()
+Indicate whether this expression is a boolean value.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_comparison_infix()
+Indicate if this is a value comparison expression.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_date_literal()
+Indicate whether this expression is a date value.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_infix()
+Indicate whether this expression is an infix expression.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_literal()
+Indicate whether this expression is a literal value.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_logical_infix()
+Indicate if this is a logical AND/OR expression.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_number_literal()
+Indicate whether this expression is a number value.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_or_infix()
+Indicate if this is a logical OR expression.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_str_literal()
+Indicate whether this expression is a string value.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B static parse_date(date_string)
+Parse a date_string using the first valid format.
+.UNINDENT
+.UNINDENT
+.SS task_forge.ql.lexer module
+.sp
+Contains the Lexer class for tokenizing input for the Taskforge Query Language.
+.INDENT 0.0
+.TP
+.B class task_forge.ql.lexer.Lexer(query)
+Bases: \fI\%object\fP
+.sp
+Scans input producing tokens.
+.INDENT 7.0
+.TP
+.B next_token()
+Return the next token from the input.
+.UNINDENT
+.UNINDENT
+.SS task_forge.ql.parser module
+.sp
+Contains the Parser class for the Taskforge Query Language.
+.INDENT 0.0
+.TP
+.B exception task_forge.ql.parser.ParseError
+Bases: \fI\%Exception\fP
+.sp
+Raised by the Parser when invalid syntax occurs.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.ql.parser.Parser(query=\(aq\(aq, lexer=None)
+Bases: \fI\%object\fP
+.sp
+Parser for the task_forge query language.
+.INDENT 7.0
+.TP
+.B classmethod from_lexer(lexer)
+Create a Parser from lexer.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B parse()
+Parse the query returning an AST. Raises ParseError on failure.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B set_input(query)
+Change the input of this parser.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.ql.parser.Precedence
+Bases: \fI\%enum.IntEnum\fP
+.sp
+Operator precedence.
+.INDENT 7.0
+.TP
+.B ANDOR = 2
+.UNINDENT
+.INDENT 7.0
+.TP
+.B COMPARISON = 3
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LOWEST = 0
+.UNINDENT
+.INDENT 7.0
+.TP
+.B STRING = 1
+.UNINDENT
+.UNINDENT
+.SS task_forge.ql.tokens module
+.sp
+Contains the Token and Type classes.
+.INDENT 0.0
+.TP
+.B class task_forge.ql.tokens.Token(literal, token_type=None)
+Bases: \fI\%object\fP
+.sp
+A query language lexical Token.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.ql.tokens.Type
+Bases: \fI\%enum.Enum\fP
+.sp
+Represents the various token types.
+.INDENT 7.0
+.TP
+.B AND = \(aqAND\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B BOOLEAN = \(aqBOOLEAN\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DATE = \(aqDATE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B EOF = \(aqEOF\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B EQ = \(aqEQ\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B GT = \(aqGT\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B GTE = \(aqGTE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LIKE = \(aqLIKE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LPAREN = \(aqLPAREN\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LT = \(aqLT\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LTE = \(aqLTE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B NE = \(aqNE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B NLIKE = \(aqNLIKE\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B NUMBER = \(aqNUMBER\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B OR = \(aqOR\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B RPAREN = \(aqRPAREN\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B STRING = \(aqSTRING\(aq
+.UNINDENT
+.INDENT 7.0
+.TP
+.B UNEXPECTED = \(aqUNEXPECTED\(aq
+.UNINDENT
+.UNINDENT
+.SS Module contents
+.sp
+Contains the implementation of the Taskforge Query Language.
+.SS task_forge.task package
+.sp
+Provides the Task and Note classes used throughout Taskforge.
+.SS Module Contents
+.INDENT 0.0
+.TP
+.B class task_forge.task.Task(title, id=None, context=\(aqdefault\(aq, priority=1.0, notes=None, created_date=None, completed_date=None, body=\(aq\(aq)
+Represents a task in a Task List.
+.sp
+This class is the basic unit in Taskforge and is central to all
+functionality.
+.sp
+The basic instantiation of a Task only requires a title and will fill out
+any required metadata with default values:
+.sp
+.nf
+.ft C
+>>> from task_forge.task import Task
+>>> Task(\(aqAn example Task\(aq)
+Task(c659687d9ad54b308a258850a5a06af1)
+.ft P
+.fi
+.sp
+All fields available for a task and their defaults are:
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBtitle\fP (\fI\%str\fP) \-\- The title or \(aqsummary\(aq of a task.
+.IP \(bu 2
+\fBid\fP (\fIOptional\fP\fI[\fP\fI\%str\fP\fI]\fP\fI\fP) \-\- The unique id for this task. If None this will be generated using
+\fI\%uuid.uuid4()\fP\&. Should only be provided if deserializing an
+existing \fI\%Task\fP\&.
+.IP \(bu 2
+\fBcreated_date\fP (\fIOptional\fP\fI[\fP\fI\%datetime.datetime\fP\fI]\fP) \-\- A datetime object representing when this task was
+created. If not provided defaults to
+\fBdatetime.now()\fP\&. Should only be provided if
+deserializing an existing \fI\%Task\fP\&.
+.IP \(bu 2
+\fBbody\fP (\fI\%str\fP) \-\- \fBDefault\fP ("") \- The body or \(aqdescription\(aq of a task.
+.IP \(bu 2
+\fBcontext\fP (\fI\%str\fP) \-\- \fBDefault\fP ("default") \- The \(aqlist\(aq this task belongs to.
+Common values are work, personal etc.
+.IP \(bu 2
+\fBpriority\fP (\fI\%float\fP) \-\- \fBDefault\fP (1.0) \- The priority of this task, this is the
+primary sorting criteria for tasks.
+.IP \(bu 2
+\fBnotes\fP (\fIList\fP\fI[\fP\fINote\fP\fI]\fP) \-\- \fBDefault\fP (None) \- A list of Note objects to for this task.
+.IP \(bu 2
+\fBcompleted_date\fP (\fI\%datetime.datetime\fP) \-\- \fBDefault\fP (None) \- A datetime object representing
+when this task was completed.
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B complete()
+Complete this task.
+.sp
+Sets self.completed_date using \fI\%datetime.datetime.now()\fP\&.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B is_completed()
+Indicate whether this task is completed or not.
+.sp
+This is aliased by \fBis_complete\fP\&.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B classmethod from_dict(dictionary)
+Create a Task from a dictionary representation.
+.sp
+Handles JSON\-deserialized types appropriately. i.e. datetime fields will
+be properly parsed if in string form.
+.sp
+Used for deserializing from JSON produced dictionaries.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B to_json()
+Convert to a dictionary which has JSON incompatible types properly serialized.
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+For richer data types use \fI\%Task.to_dict()\fP instead.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B to_dict()
+Convert this task object into a dictionary.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class task_forge.task.Note(body, id=None, created_date=None)
+A note or \(aqcomment\(aq on a task.
+.sp
+A basic note instantiation only requires the body field. All other fields
+are optional and id should not be set unless instantiating from an existing
+Note.
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBbody\fP (\fI\%str\fP) \-\- The body of the note.
+.IP \(bu 2
+\fBid\fP (\fIOptional\fP\fI[\fP\fI\%str\fP\fI]\fP\fI\fP) \-\- The unique id for this note. If None this will be generated using
+\fI\%uuid.uuid4()\fP\&. Should only be provided if deserializing an
+existing \fI\%Note\fP\&.
+.IP \(bu 2
+\fBcreated_date\fP (\fIOptional\fP\fI[\fP\fI\%datetime.datetime\fP\fI]\fP\fI\fP) \-\- The created_date for this note. If None this will be generated using
+\fI\%datetime.datetime.now()\fP\&. Should only be provided if deserializing an
+existing \fI\%Note\fP\&.
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B classmethod from_dict(dictionary)
+Create a note instance from a dictionary.
+.sp
+Handles JSON\-deserialized types appropriately. i.e. datetime fields will
+be properly parsed if in string form.
+.sp
+Used for deserializing from JSON produced dictionaries.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B to_json()
+Convert this note object into a dictionary with JSON incompatible types serialized.
+.sp
+\fBNOTE:\fP
+.INDENT 7.0
+.INDENT 3.5
+For richer data types use \fI\%Note.to_dict()\fP instead.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B to_dict()
+Convert this note object into a dictionary.
+.UNINDENT
+.UNINDENT
+.SS Submodules
+.SS Module Contents
+.sp
+Taskforge is a task management library that integrates with external services.
+.SH TASKFORGE DESIGNS
+.sp
+These are all of the design documents for Taskforge features. Not every feature
+was big enough to warrant a design and these are living documents, i.e. updated
+as necessary to reflect reality.
+.sp
+They are reference material for building a feature and used as a place for
+discussion to occur before a feature is built.
+.SS Design Doc Template
+.sp
+The template below can be used as a base for your own design documents.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+Design Doc Template
+===================
+
+This is a document that describes how to write a Taskforge design document. You
+should replace this section with a small (1 paragraph or less) description of
+what this design is for.
+
+Goals
+\-\-\-\-\-
+
+This section should contain a bullet pointed list of goals for this feature.
+i.e. these bullet points will be the "definition of done" for this feature. No
+prose is required here like this paragraph so you can replace or remove this as
+necessary. Example goals of this document have been provided below.
+
+\- Provide a nice template for people to get started writing a design.
+\- Make designs consistent throughout the project.
+
+Design
+\-\-\-\-\-\-
+
+This section is where you will talk detail about the technical specifications of
+your design. This should be the bulk of your design and as you deem appropriate
+should be split into sub sections.
+
+Specific Goal Design
+++++++++++++++++++++
+
+This describes the design of how we will achieve a specific goal we listed above.
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Taskforge
+.sp
+This document describes the goals of Taskforge the library, and it’s
+design.
+.SS Goals
+.INDENT 0.0
+.IP \(bu 2
+Task management library that can be used with multiple frontends
+.INDENT 2.0
+.IP \(bu 2
+Supports querying tasks
+.INDENT 2.0
+.IP \(bu 2
+\fI\%Query Language Design\fP
+.IP \(bu 2
+\fI\%Task Design\fP
+.IP \(bu 2
+\fI\%List Design\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+Supports saving and loading of tasks from multiple “services” via
+List implementations
+.INDENT 2.0
+.IP \(bu 2
+\fBMVP:\fP Only supports one list: \fI\%SQLite\fP
+.UNINDENT
+.IP \(bu 2
+Query Language supports both simple string searches and complex field
+based queries
+.INDENT 2.0
+.IP \(bu 2
+For Example:
+.INDENT 2.0
+.IP \(bu 2
+“milk sugar” will search through all tasks for the words “milk
+sugar” in the title, body, and notes of tasks
+.IP \(bu 2
+“title = WORK” will find tasks whose title is the string WORK
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Design
+.SS Query Language
+.sp
+The query language for tasks will accept two “modes.”
+.sp
+The first mode is a simple string search. A query which takes the form:
+\fBWORD^\fP such as: \fBmilk and sugar\fP is a simple string search. It will
+be a single expression which is a String Literal of “milk and sugar” if
+an interpreter finds a single String Literal expression as the root node
+of an AST then it should do a fuzzy string match on the title, body, and
+notes of Tasks.
+.sp
+The second mode is a tree of infix expressions. An infix expression as
+the form \fBFIELD_NAME OPERATOR VALUE\fP or, in the case of logical
+operators, \fBEXPRESSION AND_OR EXPRESSION\fP\&. As in math and programming
+languages, the \fB(\fP and \fB)\fP characters will denote “grouped”
+expressions which will push them down the order of operations so they
+are evaluated first. The final kind of expression is with logical
+operators. A string literal inside of parens will be treated as an
+\fBEXPRESSION\fP will be interpreted as a fuzzy search as above so that
+\fB(STRING_LITERAL) AND_OR EXPRESSION\fP can be used for convenience.
+.sp
+There are three “literal” expressions to represent values:
+.INDENT 0.0
+.IP \(bu 2
+String Literal
+.IP \(bu 2
+Number Literal
+.IP \(bu 2
+Date Literal
+.UNINDENT
+.sp
+Dates are any string which have the format \fBYYYY\-MM\-DD HH:MM (AM|PM)\fP
+whether quoted or unquoted.
+.sp
+Important notes:
+.INDENT 0.0
+.IP \(bu 2
+\fBFIELD_NAME\fP is lexed as a String Literal token. The parser will
+validate that it is a valid field name if it is part of an infix
+expression. Else the parser will concatenate multiple \fBFIELD_NAMES\fP into
+a single String Literal expression.
+.IP \(bu 2
+All numbers are lexed as floats, however in a query string both 5 and
+5.0 are valid.
+.UNINDENT
+.sp
+Taskforge query language has one “prefix operator” and is not seen by the parser
+or interpreter (so is not a true operator at all), and that is \fB\-\fP\&. The lexer
+will use this during tokenization of unquoted strings to change what would
+normally be a keyword into a string token. Take our above example of \fBmilk and
+sugar\fP\&. The lexer would normally interpret this as \fBSTRING AND STRING\fP\&. If we
+instead want this to be taken as \fBSTRING STRING STRING\fP we must put a \fB\-\fP in
+front of and. This means the final query is \fBmilk \-and sugar\fP\&. The \fB\-\fP is
+simply ignored by anything other than the lexer.
+.sp
+Valid infix operators are:
+.INDENT 0.0
+.IP \(bu 2
+\fB=\fP equality so that \fBtitle = foo\fP means if title is equal to
+“foo”
+.IP \(bu 2
+\fB!=\fP or \fB^=\fP negative equality so that \fBtitle != foo\fP means
+find titles which are not equal to “foo” The \fB!=\fP form is preferred
+but the \fB!\fP character is troublesome in a shell environment so the
+\fB^=\fP form is provided as a convenience.
+.IP \(bu 2
+\fB>\fP and \fB>=\fP Greater than and Greater than or equal to so that
+\fBpriority > 5\fP means priority is greater than \fB5.0\fP similarly
+\fBpriority >= 5\fP simply includes 5.0 as a valid value.
+.IP \(bu 2
+\fB<\fP and \fB<=\fP Less than and Less than or equal to. The inverse of
+the above.
+.IP \(bu 2
+\fB^\fP or \fB+\fP A “LIKE” operator for strings, performs fuzzy matching
+instead of strict equality. The \fB+\fP is the preferred form however
+is inconvenient for terminal use so \fB^\fP is also valid.
+.IP \(bu 2
+\fBAND\fP or \fBand\fP both the upper and lower case forms of \fBand\fP are
+acceptable. These perform a logical and of two expressions.
+.IP \(bu 2
+\fBOR\fP or \fBor\fP both the upper and lower case forms of \fBor\fP are
+acceptable. These perform a logical or of two expressions.
+.UNINDENT
+.sp
+Some example queries with literate explanations of interpreter behavior:
+.INDENT 0.0
+.IP \(bu 2
+\fBtitle = "take out the trash"\fP
+.INDENT 2.0
+.IP \(bu 2
+Find all tasks which have the title “take out the trash”
+.UNINDENT
+.IP \(bu 2
+\fBtitle ^ "take out the trash"\fP
+.INDENT 2.0
+.IP \(bu 2
+Find all tasks whose title contains the string “take out the
+trash”
+.UNINDENT
+.IP \(bu 2
+\fB("milk and sugar") and priority > 5\fP
+.INDENT 2.0
+.IP \(bu 2
+Find all tasks which have the string “milk and sugar” fuzzy
+matched on their title, body, and notes. Additionally verify that
+they have a priority greater than 5.0
+.UNINDENT
+.IP \(bu 2
+\fBmilk \-and sugar\fP
+.INDENT 2.0
+.IP \(bu 2
+Find all tasks which have the string “milk and sugar” fuzzy
+matched on their title, body, and notes.
+.UNINDENT
+.IP \(bu 2
+\fB(priority > 5 and title ^ "take out the trash") or (context = "work" and (priority >= 2 or ("my little pony")))\fP
+.INDENT 2.0
+.IP \(bu 2
+Find all tasks which either have a priority greater than 5.0 and a
+title containing the string “take out the trash” or which are in
+the context “work” and have a priority greater than or equal to 2
+or have the string “my little pony” in their title, body, and
+notes.
+.UNINDENT
+.UNINDENT
+.SS AST
+.sp
+The AST for the query language returned by the parser is a class which
+has a single member variable \fBexpression\fP\&.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+class AST:
+    """Abstract syntax tree for the Taskforge query language"""
+
+    def __init__(self, expression):
+        self\&.expression = expression
+
+    def __eq__(self, other):
+        return self\&.expression == other\&.expression
+
+    def __repr__(self):
+        return self\&.expression\&.__repr__()
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBexpression\fP is an Expression class object. The Expression class is as
+follows:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+class Expression:
+    """An expression is a statement that yields a value"""
+
+    \&...implementation details
+
+    def __init__(self, token, left=None, right=None):
+        self\&.token = token
+        self\&.value = None
+        self\&.operator = None
+        self\&.left = None
+        self\&.right = None
+
+        if token\&.token_type == Type\&.STRING:
+            self\&.value = token\&.literal
+        elif token\&.token_type == Type\&.NUMBER:
+            self\&.value = float(token\&.literal)
+        elif token\&.token_type == Type\&.BOOLEAN:
+            self\&.value = bool(token\&.literal)
+        elif token\&.token_type == Type\&.DATE:
+            self\&.value = Expression\&.parse_date(token\&.literal)
+        else:
+            self\&.operator = token
+            self\&.left = left
+            self\&.right = right
+
+    def __repr__(self):
+        if self\&.is_infix() and self\&.token\&.token_type in [Type\&.AND, Type\&.OR]:
+            return \(aq({} {} {})\(aq\&.format(
+                self\&.left,
+                self\&.operator\&.literal,
+                self\&.right)
+        elif self\&.is_infix():
+            return \(aq({} {} {})\(aq\&.format(
+                self\&.left\&.value
+                if self\&.left is not None
+                else self\&.left,
+                self\&.operator\&.literal,
+                self\&.right)
+        elif type(self\&.value) is str:
+            return "\(aq{}\(aq"\&.format(self\&.value)
+        else:
+            return \(aq{}\(aq\&.format(self\&.value)
+
+    def __eq__(self, other):
+        if self\&.is_infix():
+            return (other\&.is_infix() and
+                    self\&.left == other\&.left and
+                    self\&.operator == other\&.operator and
+                    self\&.right == other\&.right)
+        else:
+            return (self\&.value == other\&.value and
+                    self\&.token == other\&.token)
+
+    def is_infix(self):
+        """Indicates whether this expression is an infix expression"""
+        return self\&.operator is not None
+
+    def is_literal(self):
+        """Indicates whether this expression is a literal value"""
+        return self\&.value is not None
+
+    def is_comparison_infix(self):
+        """Indicates if this is a value comparison expression"""
+        return self\&.is_infix() and not self\&.is_logical_infix()
+
+    def is_logical_infix(self):
+        """Indicates if this is a logical AND/OR expression"""
+        return self\&.is_and_infix() or self\&.is_or_infix()
+
+    def is_and_infix(self):
+        """Indicates if this is a logical AND expression"""
+        return (self\&.is_infix() and
+                self\&.operator\&.token_type == Type\&.AND)
+
+    def is_or_infix(self):
+        """Indicates if this is a logical OR expression"""
+        return (self\&.is_infix() and
+                self\&.operator\&.token_type == Type\&.OR)
+
+    def is_str_literal(self):
+        """Indicates whether this expression is a string value"""
+        return (self\&.is_literal() and
+                self\&.token\&.token_type == Type\&.STRING)
+
+    def is_date_literal(self):
+        """Indicates whether this expression is a date value"""
+        return (self\&.is_literal() and
+                self\&.token\&.token_type == Type\&.DATE)
+
+    def is_number_literal(self):
+        """Indicates whether this expression is a number value"""
+        return (self\&.is_literal() and
+                self\&.token\&.token_type == Type\&.NUMBER)
+
+    def is_boolean_literal(self):
+        """Indicates whether this expression is a boolean value"""
+        return (self\&.is_literal() and
+                self\&.token\&.token_type == Type\&.BOOLEAN)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Task Data
+.sp
+The pseudo\-code representation of a task is:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    id: String,
+    title: String,
+    context: String
+    created_date: Date,
+    completed_date: Date | null,
+    body: String,
+    priority: Float,
+    notes: [Note]
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+A Note will be represented as:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{
+    id: String,
+    created_date: Date,
+    body: String,
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+All ID’s will be hex strings of python std library uuids regardless of
+list storage. This is a nice, 0 dependency, and easy to use UUID that
+can be made into a string.
+.SS Task Lists
+.sp
+List will be an abstract class which all list implementations will need
+to subclass, it has the following definition:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+class List(ABC):
+    """An abstract base class that all list implementations but derive from."""
+
+    @abstractmethod
+    def search(self, ast):
+        """Evaluate the AST and return a List of matching results"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def add(self, task):
+        """Add a task to the List"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_multiple(self, tasks):
+        """Add multiple tasks to the List, should be more efficient
+        resource utilization."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def list(self):
+        """Return a python list of the Task in this List"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def find_by_id(self, id):
+        """Find a task by id"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def current(self):
+        """Return the current task, meaning the oldest uncompleted
+        task in the List"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def complete(self, id):
+        """Complete a task by id"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def update(self, task):
+        """Update a task in the listist, finding the original by the
+        id of the given task"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_note(self, id, note):
+        """Add note to a task by id"""
+        raise NotImplementedError
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Additionally each list will be instantiated with the dictionary of it’s
+configuration from the config file using the \fB**dictionary\fP syntax.
+This means that a list will need to implement keyword arguments in it’s
+\fB__init__\fP constructor for all configuration items. During this it
+will need to check for missing required arguments or invalid
+configurations and raise a InvalidConfigError with a human readable
+message. Additionally any connecting or loading of files necessary for
+use will happen during object construction.
+.SS Future Work / Ideas
+.sp
+Future ideas and features I will implement are as follows:
+.INDENT 0.0
+.IP \(bu 2
+Additional Lists:
+.INDENT 2.0
+.IP \(bu 2
+Postgres
+.IP \(bu 2
+MongoDB
+.UNINDENT
+.IP \(bu 2
+GUI Frontends (QT is a good choice)
+.IP \(bu 2
+Modifier statements on queries such as \fBLIMIT\fP or \fBORDER BY\fP
+.IP \(bu 2
+Task custom fields
+.UNINDENT
+.SS task (CLI Client)
+.SS Goals
+.INDENT 0.0
+.IP \(bu 2
+Task management CLI as the first usable frontend
+.INDENT 2.0
+.IP \(bu 2
+Supports use of different lists via a configuration file
+.IP \(bu 2
+Follows Unix best practices
+.IP \(bu 2
+Uses a subcommand interface the following commands will be
+supported:
+.INDENT 2.0
+.IP \(bu 2
+\fI\%new\fP
+.IP \(bu 2
+\fI\%note\fP
+.IP \(bu 2
+\fI\%complete\fP
+.IP \(bu 2
+\fI\%query\fP
+.IP \(bu 2
+\fI\%next\fP
+.IP \(bu 2
+\fI\%edit\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS Design
+.SS Configuration File
+.sp
+The task CLI will be configured with TOML.
+.sp
+An example config file will look like:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+[list]
+name = "sqlite"
+
+[list.config]
+file = "~/.taskforge.d/tasks.sqlite3"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+To start there will be two sections, \fB[list]\fP which has a single key
+name. This name corresponds to the list implementation the user wants to load.
+\fB[list.confg]\fP is a section filled with arbitrary key value pairs that are
+passed to the constructor of the list implementation as kwargs deconstructed
+using the \fB**\fP operator.
+.SS New Subcommand
+.sp
+The new subcommand will accept the following flags:
+.INDENT 0.0
+.IP \(bu 2
+\fB\-\-body TEXT_BODY\fP populates the task body
+.IP \(bu 2
+\fB\-\-priority PRIORITY_NUMBER\fP populates the task priority
+.IP \(bu 2
+\fB\-\-context CONTEXT\fP populates the task context
+.IP \(bu 2
+\fB\-\-from\-file PATH_TO_FILE\fP loads a task/s from a yaml file or csv
+file
+.UNINDENT
+.sp
+It takes VarArgs and concatenates them into the title of a new task. So that:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+task new write a design doc
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Will create a task with the title “write a design doc." Flags as
+described above can be passed to populate other fields of the Task.
+Otherwise the flag fields will get the defaults described below:
+.INDENT 0.0
+.IP \(bu 2
+body: None
+.IP \(bu 2
+priority: 0.0
+.IP \(bu 2
+context: “default”
+.UNINDENT
+.sp
+The VarArgs are ignored if \fB\-\-from\-file\fP is provided. If the file is a
+.csv then new will assume it is a CSV with the following format:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+title,body,context,priority
+record_title,record_body,record_context,record_priority
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The order of the columns is not important. Only the title, priority, and
+context columns are required. Values can be omitted for the optional
+comments for any record which does require them.
+.SS Note Subcommand
+.sp
+The note subcommand takes no flags and one argument: the ID of the task
+to add a note to. So that:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+task note TASK_ID
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Opens up your \fB$EDITOR\fP and allows you to input text that will then be
+used as the body of a note which is attached to the task.
+.SS Complete Subcommand
+.sp
+The complete subcommand takes no flags and one argument: the ID of the
+task to add a note to. So that:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+task complete TASK_ID
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Will complete the task indicated by \fBTASK_ID\fP\&.
+.SS Query Subcommand
+.sp
+The query subcommand takes the following flags:
+.INDENT 0.0
+.IP \(bu 2
+\fB\-\-completed\fP a convenience flag to show completed results
+.IP \(bu 2
+\fB\-\-csv\fP print results as a CSV
+.IP \(bu 2
+\fB\-\-raw\fP print no decoration on task table (i.e.\ remove the “|” and
+“\-” characters)
+.IP \(bu 2
+\fB\-\-id\-only\fP print only matching task ID’s
+.UNINDENT
+.sp
+It takes VarArgs and concatenates them into a query using the \fI\%Query
+Language\fP parser. It then prints each task in a
+table using the following format:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+| ID      | Created Date      | Title      |
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+| TASK_ID | TASK_CREATED_DATE | TASK_TITLE |
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If raw is given:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ID      Created Date      Title
+TASK_ID TASK_CREATED_DATE TASK_TITLE
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If ID is given only a newline separated list of
+TASK_IDs are printed with no headers.
+.SS Next Subcommand
+.sp
+The next subcommand takes the following flags:
+.INDENT 0.0
+.IP \(bu 2
+\fB\-\-title\-only\fP print only the task title
+.IP \(bu 2
+\fB\-\-id\-only\fP print only the task id
+.UNINDENT
+.sp
+But it takes no arguments. It returns the item currently at the “top” of
+the list (sorted by oldest date and highest priority). It prints it like
+so:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+TASK_ID TASK_CREATED_DATE TASK_TITLE
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If title or id only flags are given then only that field is printed.
+.SS Edit Subcommand
+.sp
+The edit subcommand takes one argument: the task ID. It opens the
+indicated task in \fB$EDITOR\fP as a yaml file and includes all fields
+from the task. Upon saving and exiting the file will be read, parsed,
+and the task will be updated with that info.
+.SS Future Work / Ideas
+.INDENT 0.0
+.IP \(bu 2
+Configurable canned queries
+.UNINDENT
+.SH AUTHOR
+Mathew Robinson
+.SH COPYRIGHT
+2018, Mathew Robinson
+.\" Generated by docutils manpage writer.
+.
